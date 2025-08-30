@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math/big"
 	"net/http"
+	"test-app-url-shortener/utils"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -41,13 +42,15 @@ func Upsert(ctx context.Context, u URL) error {
 	}
 	filter := bson.M{"_id": u.ID}
 	update := bson.D{primitive.E{Key: "$set", Value: u}}
-
+	fmt.Println(utils.Add(1,2))
 	_, err := col.UpdateOne(ctx, filter, update, opt)
 	if err != nil {
 		return err
 	}
+	
 	return nil
 }
+
 
 func getURL(c *gin.Context) {
 	hash := c.Param("param")
@@ -67,7 +70,7 @@ func getURL(c *gin.Context) {
 
 func putURL(c *gin.Context) {
 	var m map[string]string
-
+	fmt.Println(utils.Subtract(2,1))
 	err := c.ShouldBindJSON(&m)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "failed to decode req"})
